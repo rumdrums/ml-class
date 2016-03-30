@@ -1,0 +1,111 @@
+multivariate regression
+
+__notation changes__
+features -- the particular independent variable
+superscript(i) refers to matrix of x values for given row in dataset
+	-- i refers to the particular row
+subscript(j) refers to the particular value for a particular independent variable
+	-- j refers to specific independent variable
+
+each hypothesis now has a x_0 feature that is always 1
+
+hypothesis = theta T (transpose) x
+	-- basically means multiplying a 1Xn vector of theta values
+		and multiplying them by a nX1 vector of the values of x
+	-- basically, rewriting the hypothesis and its x terms in a matrix-algebra
+		friendly way
+
+gradient descent with multiple variables	
+. similar to univariate formula:
+	theta = theta - (learning rate)/m * sigma([predicted - observed]*x_j)
+
+scaling
+. if different independent variables are on drastically different scales
+numerically, it can take longer to reach the minimum
+	solution: scale them, ideally between -1 and 1
+	-- you can divide different ind vars by different numbers to do so
+. features should also have approximately 0 mean
+	-- subtract mean of variable from each value of variable
+	-- or (x - mu) / (std deviation)
+
+polynomial regression
+. allows you to not have to try fitting straight lines
+	to your data
+. plotting exponential values of x variables
+. scaling becomes especially important with exponents
+
+normal equation
+. solve for optimal values of theta analytically rather
+	than through iterative process
+. design matrix
+	matrix that results from transposing all your individual x vectors 
+	from each training example and putting them into rows of a large matrix
+	-- results in a [m X (n+1)] matrix
+	-- y VECTOR is defined by making mX1 matrix of all corresponding y values
+	-- then theta is solved for by:
+		-- [XTranspose * X)] -1 * X transpose * y
+		- in octave: pinv(X'*X)*X'*y
+	-- feature scaling is not necessary when using normal equation
+
+normal equation non-invertability
+. should rarely happen, but what if X transposed * X is non-invertable
+. causes:
+	-- redundant features -- eg, including both size in feet and size in meters as 
+		separate features
+	-- to many features -- ie, m <= n
+		-- delete some features or use regularization
+
+normal equation vs feature scaling
+. gradient descent cons:
+	-- need to choose learning rate, a
+	-- lots of iterations
+. gradient descent pros:
+	-- works well even when n is large
+. normal equation cons:
+	-- if n is very large, calculating inverse of nXn matrix cost is O(n^3) 
+	-- when n ~ 10000, it's getting large
+
+octave
+... didn't take notes
+
+vectorizing calculations for cost functions
+. theta = theta - alpha * delta (delta is the 1/m * summation ( h(x) - y) x)
+	-- [h(x) - y] is a REAL NUMBER, not a vector -- the x to the right of it IS A VECTOR
+. delta is a vector of all the individual summations
+
+
+homework:
+. doing thetas individually:
+############
+for iter = 1:num_iters
+
+    x = X(:,2);
+    h = theta(1) + (theta(2)*x);
+
+    theta_zero = theta(1) - alpha * (1/m) * sum(h-y);
+    theta_one  = theta(2) - alpha * (1/m) * sum((h - y) .* x);
+
+    theta = [theta_zero; theta_one];
+
+    J_history(iter) = computeCost(X, y, theta);
+    printf("Cost is %.5f\n",J_history(iter));
+#################
+
+. both thetas at once:
+##############################
+for iter = 1:num_iters
+
+    predictions = X*theta;
+    errors = (predictions-y);
+    %delta =  1/m * sum(errors.*X(:,2));
+    delta =  X' * ( X * theta - y);
+    theta = theta - (alpha/m * delta);
+
+    % Save the cost J in every iteration
+    J_history(iter) = computeCost(X, y, theta);
+    printf("Cost is %.5f\n",J_history(iter));
+
+
+end
+#############################
+

@@ -1,0 +1,121 @@
+__classification problems__
+
+w/ linear regression
+. you *can* use linear regression to estimate outputs within 
+	discrete values, but it doesn't work very well
+
+logistic regression
+. h(x) = g(theta Transpose * x )
+	g(z) = 1 / (1+e^-z)
+		-- sigmoid aka logistic function
+		-- substitute z for (theta Transpose * x) -- in other words:
+			-- g(theta Transpose * x ) = 1/(1+e^(theta Transpose * x))
+. h(x) is probability that y = 1 given input x
+	-- p( y = 1 | x; theta)
+. g(z) >= .5, predict y = 1
+. g(z) < .5, predict y = 0
+. whenever theta Transpose X >= 0, g(theta Transpose X) >= .5, so y = 1
+	-- y = 0 when theta Transpose X < 0
+	-- why? because of graph of g(z) -- sigmoid function;
+		when x = 0, y = .5
+
+decision boundary 
+. when graphing x1 and x2, the line where x1 + x2 = theta_1
+	is the decision boundary line
+	-- function entirely of theta values, not data
+. decision boundaries are not always linear
+	-- with higher order polynomial coefficients, can
+		be a circle -- x1^2 + x2^2 = 1
+
+fitting parameters in logistic regression
+. linear regression cost function doesn't work
+	well with logistic regression -- the complexity of the
+	hypothesis equation yields a non-convex equation when
+	you use linear regression cost function -- there are lots
+	of local minima and you're not guaranteed to converge
+	to global minimum
+
+logistic regression cost function
+. Cost(h(x),y) =  -log(h(x)) if y == 1
+			 =	-log(1 - h(x)) if y == 0
+. J(theta) = 1/m * (Cost(h(x),y))
+. Compact form of the above two equations:
+	-- Cost(h(x),y) = -y*log(h(x)) - (1-y)*log(1-h(x))
+	-- Rewritten:
+		-(1/m) sum( y * log(h(x)) + (1-y)*log(1-h(x)))
+	-- depending on value of y, one or the other
+		of the terms on either side of the minus sign
+		will be cancelled out and you'll be left with
+		an equivalent corresponding two one of the two above
+		functions
+. update rule looks exactly same as for linear regression:
+	-- theta = theta - a * ( sum(h(x) - y)(x))
+	-- except that h(x) is the probability of y=1, not predicted value of y
+
+. feature scaling also applies to logistic regression
+
+. other optimization algorithms besides gradient descent:
+	-- conjugate gradient
+	-- BFGS
+	-- L-BFGS
+	-- no need to manually pick alpha
+	-- faster, but more complex
+
+multi-class classification
+. ie, not 0 or 1, but several distinct categories
+. "one-vs-all" classification:
+	-- each individual classification gets set as
+		the positive examples, everything else set to 0
+	-- in other words, you get individual probabilities
+		for each class
+	-- to predict: given a value of x, predict the classifier
+		that gives us the highest probability
+
+regularization
+. underfitting -- your model doesn't fit the data very well
+. overfitting -- ie going out of your way to develop a model
+	that fits every single damn point on the graph but
+	fails to generalize
+	-- adding TOO MANY FEATURES
+. addressing overfitting
+	-- reduce number of features
+		-- model selection algorithms
+	-- regularization:
+		-- keep all features but reduce magnitude of parameters
+		-- works well when we use lots of features
+
+approaches to regularization
+. set selected theta values to be very small
+	-- you do this when calculating COST 
+	-- eg, penalize theta3 and theta4 in:
+		theta0 + theta1*x + theta2*x^2 + theta3*x^3 + theta4*x^4 
+		... so:
+		J = min 1/2m * sigma(h(x) - y)^2 + 1000*theta3^2 + 1000*theta4^2
+. shrink ALL parameters
+	-- J =  1/2m * [sigma(h(x) - y)^2 + lambda * sigma(theta_j^2)]
+	-- second sigma generally starts at 1, not 0, excluding theta0
+	-- lambda = regularization parameter
+. regularization parameter represents tradeoff between representing
+	training data and developing general model
+. with gradient descent:
+	-- theta = theta - a * 1/m * sigma((h(x) - y)*x) + (lambda/m)*theta_j
+. and, doing some grouping:
+	-- theta(1-a*(lambda/m)) - a * 1/m * sigma((h(x) - y)*x)
+	-- 1-a*(lambda/m) should be less than 1
+
+regularization with the normal equation:
+. the 'normal' normal equation:
+	-- theta = ( X'X )^-1 * X'y
+. with regularization:
+	-- theta = ( X'X + lambda*(special matrix)^-1
+	-- 'special matrix':
+		depending on size... if n == 2, you get a 3x3 matrix,
+			because n+1Xn+1 = 3x3:
+			[ 0 0 0; 0 1 0; 0 0 1] -- looks almost like identity matrix but the 
+			first column, first row is a zero, not a one
+. regularization with logistic regression
+	-- looks exactly the same as for linear regression:
+		J =  1/2m * [sigma(h(x) - y)^2 + lambda * sigma(theta_j^2)]
+
+
+https://github.com/schneems/Octave/blob/master/mlclass-ex2/mlclass-ex2/costFunctionReg.m

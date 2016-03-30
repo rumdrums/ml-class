@@ -1,0 +1,50 @@
+
+supervised learning
+. "correct" answers already provided
+. eg, we already have a dataset where we know relationship between
+	house square footage and selling price
+
+regression
+. continuous values for dep var
+
+classification
+. discrete values for dependent var
+
+unsupervised
+. unstructured dataset provided
+. clustering algorithms
+
+matrix algebra
+. two matrices must be of same dimension to add them, result is same dimension
+. mXn matrix * nXo matrix = mXo matrix
+. to multiply matrix by matrix, multiply first matrix by each column of the second
+. inverse:
+	-- some mXm (square) matrices have an inverse, which multiplied by it yields identity 
+	matrix
+	-- those without inverse are called singular or degenerate
+. transpose:
+	-- transposing rows and columns
+
+
+notation
+m = number of traning examples (sample size)
+(x,y) = single training example
+
+cost function (squared error cost function)
+. 1/2 m * summation of squared errors
+. aka squared error function
+. goal is to find values for intercept and slope that
+	minimizes the cost function
+
+gradient descent
+. initialize intercept and coefficients to an initial value
+. keep changing values until arriving at minimum or local minimum
+. values you start with can heavily influence your final estimates
+	-- except that, in linear regression, there is always only one 
+		minimum 
+. alpha = learning rate -- ie the size of the steps you take with
+	each prediction
+. "batch" gradient descent -- just means that each step in the descent
+	looks at all training examples (ie, the mean squared error is calculated using ALL data points in the sample)
+
+
