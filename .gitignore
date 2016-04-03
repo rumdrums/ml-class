@@ -2,3 +2,4 @@ lib
 machine-learning-*
 octave-workspace
 token.mat
+*.swp

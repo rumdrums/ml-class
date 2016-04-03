@@ -13,14 +13,17 @@ pred = predictOneVsAll(all_theta, X);
 x_new = [ones(size(X,1), 1) X];
 
 % results in 10x5000 matrix:
-y_hat = all_theta*x_new';
+%y_hat = sigmoid(all_theta*x_new');
 
 % 5000x10:
-
 y_hat = sigmoid(x_new*all_theta');
-p = round(max(y_hat, [], 2));
 
-fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == y)) * 100);
+%p = round(max(y_hat, [], 2));
+[val, p] = max(y_hat, [], 2)
+
+%p( p==10 ) = 0; 
+mean(double(p==y))*100;
+
 
 
 
