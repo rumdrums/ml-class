@@ -1,7 +1,31 @@
+%########### script outline
 input_layer_size  = 400;  % 20x20 Input Images of Digits
 num_labels = 10;       
 load('ex3data1.mat'); % training data stored in arrays X, y
 m = size(X, 1);
+%rand_indices = randperm(m);
+%sel = X(rand_indices(1:100), :);
+lambda = 0.1;
+[all_theta] = oneVsAll(X, y, num_labels, lambda);
+pred = predictOneVsAll(all_theta, X);
+%############
+
+x_new = [ones(size(X,1), 1) X];
+
+% results in 10x5000 matrix:
+y_hat = all_theta*x_new';
+
+% 5000x10:
+
+y_hat = sigmoid(x_new*all_theta');
+p = round(max(y_hat, [], 2));
+
+fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == y)) * 100);
+
+
+
+
+
 
 
 

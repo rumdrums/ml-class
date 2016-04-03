@@ -37,8 +37,8 @@ grad = zeros(size(theta));
 %
 
 h = sigmoid(X*theta);
-disp("This is theta: "), disp(theta);
-disp("This is h: "), disp(h);
+%disp("This is theta: "), disp(theta);
+%disp("This is h: "), disp(h);
 shift_theta = theta(2:size(theta));
 theta_reg = [0;shift_theta];
 J = (1/m)*(-y'*log(h) - (1-y)'*log(1-h))+(lambda/(2*m))*theta_reg'*theta_reg;
