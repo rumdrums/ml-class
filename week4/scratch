@@ -10,6 +10,7 @@ lambda = 0.1;
 pred = predictOneVsAll(all_theta, X);
 %############
 
+%########### predictOneVsAll notes:
 x_new = [ones(size(X,1), 1) X];
 
 % results in 10x5000 matrix:
@@ -23,8 +24,32 @@ y_hat = sigmoid(x_new*all_theta');
 
 %p( p==10 ) = 0; 
 mean(double(p==y))*100;
+%############
 
 
+%########## neural network script:
+input_layer_size  = 400; 
+hidden_layer_size = 25; 
+num_labels = 10; 
+load('ex3data1.mat');
+load('ex3weights.mat');
+pred = predict(Theta1, Theta2, X);
+%#########
+
+
+%######## predict function:
+
+x_new = [ones(size(X,1), 1) X];
+a2 = sigmoid(x_new*Theta1');
+new_a2 = [ones(size(a2,1), 1) a2];
+a3 = sigmoid(new_a2*Theta2');
+[val, p] = max(a3, [], 2);
+
+
+%#############
+
+
+load('ex3weights.mat');
 
 
 
