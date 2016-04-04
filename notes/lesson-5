@@ -1,0 +1,29 @@
+cost function for neural networks
+. L = number of layers in network
+. s_l = number of units (excluding bias unit) in layer l
+	-- aka 'k'
+
+cost function formula
+. basically same as for logistic regression, but since there
+	are k layers of units, you have to sum them all up
+	appropriately
+. hypothesis:
+	is a k-dimensional vector
+
+. J = 
+-1/m * (sum(
+			sum(
+				y_k^i * log(h(x^i))_k + (1-y_k^i) log(1-h(x^i))_k)
+			)
+	 )
+	### regularization term -- 
+	### don't forget to exclude bias unit:
+	+ lambda/2m * sum(
+					sum(
+						sum(
+							Theta_ji^l)2)
+				)		
+
+minimizing the cost function
+. forward propagation and back propagation
+
