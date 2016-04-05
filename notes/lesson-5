@@ -25,5 +25,56 @@ cost function formula
 				)		
 
 minimizing the cost function
-. forward propagation and back propagation
+forward propagation
+. working through the layers with a given value of x
+	-- a^1 = x
+	-- z^2 = Theta^1*a^1
+	-- a^2 = g(z^2)
+	-- etc...
+
+back propagation
+. delta_j^l = "error" of node j in layer l
+. to calcuate:
+	-- start at last layer
+		delta_j^4 = a_j^4 - y_j
+		delta^3 = (Theta^3)'*delta^4 .* deriv(g(z^3))
+		etc.
+	-- there's no delta^1
+
+back propagation algorithm
+. set Delta matrix = 0 for all l, i, j
+. for i=1 to m (loop through training set):
+	-- set a(1) to x^i
+	-- perform forward propagation to compute a^l for l = 2,3 ... L
+	-- using y^i, compute d^L = a^L - y^i
+	-- Delta_ij^l := Delta_ij^l + a_j^l*delta_i(l+1)
+	-- vectorized:
+		Delta^l := Delta^l + delta(l+1)(a^l)'
+. outside for loop:
+	-- the 'D' terms
+		-- he doesn't really talk about them
+		-- derivative of J(Theta) = D_ij^l
+. each individual delta_j^l is the derivative of the cost function
+	with respect to z_j^l
+
+gradient checking
+. easy to introduce bugs into back propagation
+. basically, taking points around theta plotted on a graph
+	and calculating slope from them and comparing it to 
+	the derivative of theta
+
+random initialization
+. with neural networks, initializing all values of theta to 0 doesn't work
+	-- all features will be symmetric and you won't be able to tease
+		out the differences between them
+	-- instead, random initialization
+		-- rand(1,11) * 2*INIT_EPSILON - INIT_EPSILON
+			so that each Theta is in [ -e, e ]
+
+architecture of network
+. reasonable defaults:
+	-- single hidden layer
+	-- or, multiple with same number of units in each hidden layer
+	-- usually, the more hidden units the better
+
 
