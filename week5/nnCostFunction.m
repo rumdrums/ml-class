@@ -78,6 +78,7 @@ disp(size(z2));
 a2 = sigmoid(z2);
 a2 = [ones(size(a2,1), 1) a2];
 disp("a2");
+%disp(a2);
 disp(size(a2));
 
 disp("Theta2");
@@ -89,16 +90,33 @@ disp(size(z3));
 
 a3 = sigmoid(z3);
 disp("a3");
+%disp(a3);
 disp(size(a3));
 
 h = a3;
-J = (1/m) * ( -y'*log(h) - (1-y)'*log(1-h) );
+disp("h");
+disp(size(h));
+
+disp("y");
+disp(size(y));
+
+new_y = zeros(size(y,1),10);
+% convert y to matrix:
+for i = 1:size(y,1)
+	new_y(i,y(i)) = 1;
+end
+disp("new_y");
+disp(size(new_y));
+
+y = new_y;
+% no transposing y here, just
+% .* multiplication:
+J = (1/m) * sum(sum(( -y.*log(h) - (1-y).*log(1-h) )));
 disp("J");
+disp(J);
 disp(size(J));
 
-
- 
-
+pause;
 
 % -------------------------------------------------------------
 

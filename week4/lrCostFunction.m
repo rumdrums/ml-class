@@ -35,14 +35,36 @@ grad = zeros(size(theta));
 %           temp(1) = 0;   % because we don't add anything for j = 0  
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
+disp("X");
+disp(size(X));
+
+disp("theta");
+disp(size(theta));
+
+disp("y");
+disp(size(y));
 
 h = sigmoid(X*theta);
-%disp("This is theta: "), disp(theta);
-%disp("This is h: "), disp(h);
+disp("h");
+disp(size(h));
+
 shift_theta = theta(2:size(theta));
+disp("shift_theta");
+disp(size(shift_theta));
+
 theta_reg = [0;shift_theta];
+disp("theta_reg");
+disp(size(theta_reg));
+
 J = (1/m)*(-y'*log(h) - (1-y)'*log(1-h))+(lambda/(2*m))*theta_reg'*theta_reg;
+disp("J");
+disp(size(J));
+
+pause;
+
 grad = (1/m)*(X'*(h-y)+lambda*theta_reg);
+%disp("grad");
+%disp(size(grad));
 
 % =============================================================
 
