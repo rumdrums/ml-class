@@ -109,14 +109,18 @@ disp("new_y");
 disp(size(new_y));
 
 y = new_y;
+
 % no transposing y here, just
 % .* multiplication:
-J = (1/m) * sum(sum(( -y.*log(h) - (1-y).*log(1-h) )));
+cost = (1/m) * sum(sum(( -y.*log(h) - (1-y).*log(1-h) )));
+% replace 1st columns with zeros:
+Theta1(:,1) = 0;
+Theta2(:,1) = 0;
+regularization = (lambda/(2*m)) * (sum(sum((Theta1.*Theta1))) + sum(sum((Theta2.*Theta2))));
+J = cost + regularization;
 disp("J");
 disp(J);
 disp(size(J));
-
-pause;
 
 % -------------------------------------------------------------
 

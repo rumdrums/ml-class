@@ -48,14 +48,16 @@ h = sigmoid(X*theta);
 disp("h");
 disp(size(h));
 
-shift_theta = theta(2:size(theta));
+% 2-step process for removing 1st column from theta...
+shift_theta = theta(2:size(theta)); % I think this is probably a bad way to do this
 disp("shift_theta");
 disp(size(shift_theta));
-
+% ... and then adding it back as zeros:
 theta_reg = [0;shift_theta];
 disp("theta_reg");
 disp(size(theta_reg));
 
+% this should probably be using .* instead -- eg, -y.*log(h):
 J = (1/m)*(-y'*log(h) - (1-y)'*log(1-h))+(lambda/(2*m))*theta_reg'*theta_reg;
 disp("J");
 disp(size(J));
