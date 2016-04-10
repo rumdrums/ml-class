@@ -62,65 +62,67 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
-%J = (1/m)*(-y'*log(h) - (1-y)'*log(1-h))+(lambda/(2*m))*theta_reg'*theta_reg;
+debug = 0;
 
 a1 = [ones(size(X,1), 1) X];
-disp("a1");
-disp(size(a1));
-
-disp("Theta1");
-disp(size(Theta1));
-
 z2 = a1 * Theta1';
-disp("z2");
-disp(size(z2));
-
 a2 = sigmoid(z2);
 a2 = [ones(size(a2,1), 1) a2];
-disp("a2");
-%disp(a2);
-disp(size(a2));
-
-disp("Theta2");
-disp(size(Theta2));
-
 z3 = a2 * Theta2';
-disp("z3");
-disp(size(z3));
-
 a3 = sigmoid(z3);
-disp("a3");
-%disp(a3);
-disp(size(a3));
-
 h = a3;
-disp("h");
-disp(size(h));
 
-disp("y");
-disp(size(y));
+%new_y = zeros(size(y,1),10);
+%% convert y to matrix:
+%for i = 1:size(y,1)
+%	new_y(i,y(i)) = 1;
+%end
+%disp("new_y");
+%disp(size(new_y));
+%y = new_y;
 
-new_y = zeros(size(y,1),10);
-% convert y to matrix:
-for i = 1:size(y,1)
-	new_y(i,y(i)) = 1;
-end
-disp("new_y");
-disp(size(new_y));
-
-y = new_y;
+% this doesn't cause dimension error when running check function,
+% y = new_y above does:
+y = repmat([1:num_labels], m, 1) == repmat(y, 1, num_labels);
 
 % no transposing y here, just
 % .* multiplication:
 cost = (1/m) * sum(sum(( -y.*log(h) - (1-y).*log(1-h) )));
 % replace 1st columns with zeros:
-Theta1(:,1) = 0;
-Theta2(:,1) = 0;
-regularization = (lambda/(2*m)) * (sum(sum((Theta1.*Theta1))) + sum(sum((Theta2.*Theta2))));
+Theta1_reg = Theta1;
+Theta1_reg(:,1) = 0;
+Theta2_reg = Theta2;
+Theta2_reg(:,1) = 0;
+regularization = (lambda/(2*m)) * (sum(sum((Theta1_reg.*Theta1_reg))) ... 
+	+ sum(sum((Theta2_reg.*Theta2_reg))));
 J = cost + regularization;
-disp("J");
-disp(J);
-disp(size(J));
+
+if ( debug == 1) 
+	whos
+endif
+
+delta1 = zeros(size(Theta1));
+delta2 = zeros(size(Theta2));
+
+
+
+% backprop in a for loop:
+for t = 1:m
+	a1t = [1 X(t,:)];
+	z2t = a1t * Theta1';
+	a2t = sigmoid(z2t);
+	a2t = [1 a2t ];
+	z3t = a2t * Theta2';
+	a3t = sigmoid(z3t);
+	d3t = a3t - y(t,:);
+	Theta2_new=Theta2(:,2:end);
+	d2t = (d3t * Theta2_new) .* sigmoidGradient(z2t);
+	delta2 = delta2 + d3t'*a2t;
+	delta1 = delta1 + d2t'*a1t;
+end;
+
+Theta2_grad = delta2/m;
+Theta1_grad = delta1/m;
 
 % -------------------------------------------------------------
 
