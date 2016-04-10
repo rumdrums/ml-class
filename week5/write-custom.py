@@ -1,6 +1,9 @@
 #!/usr/bin/python
 
 
+# to run:
+# ./write-custom.py > custom.m
+
 from PIL import Image
 import sys
 import glob
@@ -29,13 +32,14 @@ class Unroller:
 
 arrays = []
 png_files = glob.glob('%s/*.png' % the_dir )
+num_reps = 2
 
 print("function [X y] = custom()")
 print("X = zeros(10,400);")
 print("y = zeros(10,1);")
 for png in png_files:
 	Unroller(png).print_it()
-print("X = repmat(X,50,1);")
-print("y = repmat(y,50,1);")
+print("X = repmat(X,%d,1);" % num_reps)
+print("y = repmat(y,%d,1);" % num_reps)
 print("\nend")
 
