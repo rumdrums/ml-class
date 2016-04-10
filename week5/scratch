@@ -10,11 +10,11 @@ load('ex4weights.mat');
 nn_params = [Theta1(:) ; Theta2(:)];
 lambda = 0;
 
-J = nnCostFunction(nn_params, input_layer_size, hidden_layer_size, ...
+%J = nnCostFunction(nn_params, input_layer_size, hidden_layer_size, ...
                    num_labels, X, y, lambda);
 
 lambda = 1;
-J = nnCostFunction(nn_params, input_layer_size, hidden_layer_size, ...
+%J = nnCostFunction(nn_params, input_layer_size, hidden_layer_size, ...
                    num_labels, X, y, lambda);
 
 %##########
@@ -58,6 +58,9 @@ J = cost + regularization;
 delta1 = zeros(size(Theta1));
 delta2 = zeros(size(Theta2));
 
+
+Theta2_new=Theta2(:,2:end);
+
 % backprop in a for loop:
 for t = 1:m
     a1t = [1 X(t,:)];
@@ -67,16 +70,13 @@ for t = 1:m
     z3t = a2t * Theta2';
     a3t = sigmoid(z3t);
     d3t = a3t - y(t,:);
-    d2t = (Theta2' * d3t') .* sigmoidGradient(z2t);
-    % remove dt2_0:
-    d2t = d2t(2:end);
+    d2t = (d3t * Theta2_new) .* sigmoidGradient(z2t);
     delta2 = delta2 + d3t'*a2t;
-    delta1 = delta1 + d2t'*a1t';
+    delta1 = delta1 + d2t'*a1t;
 end;
 
 Theta2_grad = delta2/m;
 Theta1_grad = delta1/m;
-
 
 
 %####################

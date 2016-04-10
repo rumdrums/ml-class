@@ -30,38 +30,6 @@ J = 0;
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
 
-% ====================== YOUR CODE HERE ======================
-% Instructions: You should complete the code by working through the
-%               following parts.
-%
-% Part 1: Feedforward the neural network and return the cost in the
-%         variable J. After implementing Part 1, you can verify that your
-%         cost function computation is correct by verifying the cost
-%         computed in ex4.m
-%
-% Part 2: Implement the backpropagation algorithm to compute the gradients
-%         Theta1_grad and Theta2_grad. You should return the partial derivatives of
-%         the cost function with respect to Theta1 and Theta2 in Theta1_grad and
-%         Theta2_grad, respectively. After implementing Part 2, you can check
-%         that your implementation is correct by running checkNNGradients
-%
-%         Note: The vector y passed into the function is a vector of labels
-%               containing values from 1..K. You need to map this vector into a 
-%               binary vector of 1's and 0's to be used with the neural network
-%               cost function.
-%
-%         Hint: We recommend implementing backpropagation using a for-loop
-%               over the training examples if you are implementing it for the 
-%               first time.
-%
-% Part 3: Implement regularization with the cost function and gradients.
-%
-%         Hint: You can implement this around the code for
-%               backpropagation. That is, you can compute the gradients for
-%               the regularization separately and then add them to Theta1_grad
-%               and Theta2_grad from Part 2.
-%
-
 debug = 0;
 
 a1 = [ones(size(X,1), 1) X];
@@ -80,9 +48,13 @@ h = a3;
 %disp("new_y");
 %disp(size(new_y));
 %y = new_y;
-
+%
 % this doesn't cause dimension error when running check function,
 % y = new_y above does:
+%disp(y)
+%y = repmat([1:num_labels], m, 1) == repmat(y, 1, num_labels);
+
+% test:
 y = repmat([1:num_labels], m, 1) == repmat(y, 1, num_labels);
 
 % no transposing y here, just
@@ -99,30 +71,38 @@ J = cost + regularization;
 
 if ( debug == 1) 
 	whos
-endif
+endif;
 
 delta1 = zeros(size(Theta1));
 delta2 = zeros(size(Theta2));
 
 
+% remove bias column entirely:
+Theta2_new = Theta2(:,2:end);
 
 % backprop in a for loop:
 for t = 1:m
+	% forward prop:
 	a1t = [1 X(t,:)];
 	z2t = a1t * Theta1';
 	a2t = sigmoid(z2t);
 	a2t = [1 a2t ];
 	z3t = a2t * Theta2';
 	a3t = sigmoid(z3t);
+	% back prop:
 	d3t = a3t - y(t,:);
-	Theta2_new=Theta2(:,2:end);
-	d2t = (d3t * Theta2_new) .* sigmoidGradient(z2t);
 	delta2 = delta2 + d3t'*a2t;
+	d2t = (d3t * Theta2_new) .* sigmoidGradient(z2t);
 	delta1 = delta1 + d2t'*a1t;
 end;
 
 Theta2_grad = delta2/m;
 Theta1_grad = delta1/m;
+
+% regularization:
+%Theta2_grad = ...
+%Theta1_grad = ...
+
 
 % -------------------------------------------------------------
 
