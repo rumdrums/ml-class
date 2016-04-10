@@ -17,9 +17,6 @@ options = optimset('MaxIter', 200);
 lambda = 1;
 
 [X, y] = custom();
-X = repmat(X,50,1)
-y = repmat(y,50,1)
-
 
 fprintf('Loading and Visualizing Data ...\n')
 

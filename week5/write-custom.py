@@ -35,5 +35,7 @@ print("X = zeros(10,400);")
 print("y = zeros(10,1);")
 for png in png_files:
 	Unroller(png).print_it()
+print("X = repmat(X,50,1);")
+print("y = repmat(y,50,1);")
 print("\nend")
 
