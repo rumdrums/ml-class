@@ -31,7 +31,7 @@ arrays = []
 png_files = glob.glob('%s/*.png' % the_dir )
 
 print("function [X y] = custom()")
-print("X = zeros(1,400);")
+print("X = zeros(10,400);")
 print("y = zeros(10,1);")
 for png in png_files:
 	Unroller(png).print_it()

@@ -11,12 +11,15 @@ fprintf('\nTraining Neural Network... \n')
 
 %  After you have completed the assignment, change the MaxIter to a larger
 %  value to see how more training helps.
-options = optimset('MaxIter', 50);
+options = optimset('MaxIter', 200);
 
 %  You should also try different values of lambda
 lambda = 1;
 
 [X, y] = custom();
+X = repmat(X,50,1)
+y = repmat(y,50,1)
+
 
 fprintf('Loading and Visualizing Data ...\n')
 
@@ -82,5 +85,15 @@ pause;
 pred = predict(Theta1, Theta2, X);
 
 fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == y)) * 100);
+
+pause;
+fprintf('\nProgram paused. Press enter to continue.\n');
+
+predictY(Theta1, ...
+        Theta2, ....
+        input_layer_size, ...
+        hidden_layer_size, ...
+        num_labels, ...
+        X, y);
 
 
