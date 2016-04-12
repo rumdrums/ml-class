@@ -80,18 +80,31 @@ delta2 = zeros(size(Theta2));
 % remove bias column entirely:
 Theta2_new = Theta2(:,2:end);
 
-% vectorized backprop:
-% back prop:
-%whos;
-d3 = a3 - y;
-delta2 = d3'*a2;
-d2 = (d3 * Theta2_new) .* sigmoidGradient(z2);
-delta1 = d2'*a1;
+% backprop in a for loop:
+for t = 1:m
+	% forward prop:
+	a1t = [1 X(t,:)];
+	z2t = a1t * Theta1';
+	a2t = sigmoid(z2t);
+	a2t = [1 a2t ];
+	z3t = a2t * Theta2';
+	a3t = sigmoid(z3t);
+	% back prop:
+	d3t = a3t - y(t,:);
+	delta2 = delta2 + d3t'*a2t;
+	d2t = (d3t * Theta2_new) .* sigmoidGradient(z2t);
+	delta1 = delta1 + d2t'*a1t;
+end;
 
 Theta2_grad = delta2/m;
 Theta1_grad = delta1/m;
 
 % regularization:
+%fprintf(['Theta2_grad -- BEFORE %d \n'], size(Theta2_grad));
+%Theta2_grad(:,2:end) = Theta2_grad(:,2:end) + ( Theta2_grad(:,2:end) * (lambda/m) );
+%Theta2_grad(:,2:end) = Theta2_grad(:,2:end) * (lambda/m);
+%fprintf(['Theta2_grad -- AFTER %d \n'], size(Theta2_grad));
+%Theta1_grad(:,2:end) = Theta1_grad(:,2:end) + ( Theta1_grad(:,2:end) * (lambda/m) );
 Theta2_grad(:,2:end) = Theta2_grad(:,2:end) + Theta2(:,2:end) * (lambda/m);
 Theta1_grad(:,2:end) = Theta1_grad(:,2:end) + Theta1(:,2:end) * (lambda/m);
 
