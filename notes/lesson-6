@@ -1,0 +1,24 @@
+improving your model
+
+things you can do:
+. get more training examples
+. use fewer features
+. use more features
+. add polynomial features
+. decrease lambda -- regularization parameter
+. increase lambda
+
+__evaluating a hypothesis__
+
+does your model overfit the data?
+. split your data:
+	-- 70 % training set
+	-- 30 % test set
+. compute test set error
+	-- cost function
+	-- misclassification error
+		err(h(x),y) = { 1 if h(x) >= .5 and y = 0, or if h(x) < .5 and y = 1 }
+			-- in other words, binary 0/1 error score if the prediction is wrong;
+				calculate the test error:
+		test error = t/m_test * sigma( err(h0(x_test^i),y_test^i) )
+
