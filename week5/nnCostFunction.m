@@ -81,8 +81,6 @@ delta2 = zeros(size(Theta2));
 Theta2_new = Theta2(:,2:end);
 
 % vectorized backprop:
-% back prop:
-%whos;
 d3 = a3 - y;
 delta2 = d3'*a2;
 d2 = (d3 * Theta2_new) .* sigmoidGradient(z2);
