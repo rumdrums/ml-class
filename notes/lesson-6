@@ -22,3 +22,27 @@ does your model overfit the data?
 				calculate the test error:
 		test error = t/m_test * sigma( err(h0(x_test^i),y_test^i) )
 
+__model selection problems__
+what features to include, how to set lambda, etc.
+
+adding polynomial terms
+** don't get why he introduces cross-validation step here -- why not
+** just redo entire model against training set and add polynomial terms then?
+	-- in other words, why come up with a model, and once you have it,
+		only then start adding polynomial terms?
+. instead of just a training and test set:
+	-- training (60% of your data), cross-validation (20%), test set (20%)
+	-- idea is that you train initial model on training set
+	-- then test with polynomial terms on CV set
+	-- then do final test on test set
+
+high bias and high variance problems -- underfitting and overfitting problems
+. regularization is one way to find the happy medium
+	-- find your initial model without regularization
+	-- test different values of lambda against it with cross-training set
+	-- evaluate on test set
+
+
+
+
+
