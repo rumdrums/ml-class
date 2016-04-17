@@ -85,6 +85,10 @@ regularization
 		-- works well when we use lots of features
 
 approaches to regularization
+. From week6 assignment -- good summary of it:
+		"The regularization term puts a penalty on the overal cost 
+		J. As the magnitudes of the model parameters θ j
+		increase, the penalty increases as well."
 . set selected theta values to be very small
 	-- you do this when calculating COST 
 	-- eg, penalize theta3 and theta4 in:

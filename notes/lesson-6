@@ -43,6 +43,44 @@ high bias and high variance problems -- underfitting and overfitting problems
 	-- evaluate on test set
 
 
+Learning Curves
+. plot J_train(theta) or J_cv(theta) as function of m
+. average J_train error increases as sample size increases, which makes sense
+. average J_cv error should decrease as sample size increases
 
+high bias
+. if a learning algorithm has high bias, ie the model doesn't fit the data well,
+	getting more training data won't help
+	-- you should use j_train and j_cv converge at a high level
+high variance
+. plotting J_train against sample size again -- you should see j_train slightly
+	increase as m increases, which makes intuitive sense
+. if, when plotting J_train and J_cv against the sample size, you see a consistently large
+gap between the the J_train line and the J_cv line, it is an indication that 
+you _variance_ is high
+	-- increasing the amount of training data should help
+
+Getting more training examples:
+	-- fixes high variance
+
+Smaller sets of features
+	-- fixes high variance
+
+Getting additional features
+	-- fixes high bias
+
+Adding polynomial features
+	-- fixes high bias
+
+Decreasing lambda
+	-- fixes high bias
+
+Increasing lambda
+	-- fixes high variance
+
+Applied to neural networks:
+. can start with a small neural network, few units, few or one hidden layers
+. often, however, starting with a large network and addressing overfitting with
+	regularization is more effective than using a small network
 
 

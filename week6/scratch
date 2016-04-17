@@ -1,0 +1,41 @@
+load ('ex5data1.mat');
+m = size(X, 1);
+theta = [1 ; 1];
+
+J = linearRegCostFunction([ones(m, 1) X], y, theta, 1);
+%#################
+
+lambda = 1;
+m = size(X,1);
+%X = [ones(m, 1) X];
+y_hat = X*theta;
+sumSquErrs = sum((y_hat-y).^2);
+theta = theta(2:size(theta));
+theta = [0;theta];
+J = sumSquErrs / (2*m) + (lambda/(2*m))*sum(theta.^2) ;
+grad =  (X' * y_hat)/m + theta*(lambda/m);
+
+
+
+
+%##################
+
+
+
+theta = [1 ; 1];
+[J, grad] = linearRegCostFunction([ones(m, 1) X], y, theta, 1);
+
+lambda = 0;
+[theta] = trainLinearReg([ones(m, 1) X], y, lambda);
+
+plot(X, y, 'rx', 'MarkerSize', 10, 'LineWidth', 1.5);
+plot(X, [ones(m, 1) X]*theta, '--', 'LineWidth', 2)
+
+lambda = 0;
+[error_train, error_val] = ...
+    learningCurve([ones(m, 1) X], y, ...
+                  [ones(size(Xval, 1), 1) Xval], yval, ...
+                  lambda);
+
+plot(1:m, error_train, 1:m, error_val);
+
