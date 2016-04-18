@@ -83,4 +83,37 @@ Applied to neural networks:
 . often, however, starting with a large network and addressing overfitting with
 	regularization is more effective than using a small network
 
+###########
+
+Error Analysis
+. manually examining incorrectly classified examples to see if you see
+	systematic errors
+. numerical evaluation -- looking at numbers in your data rather than too
+	much manual looking at data sets
+	"stemming" software -- reduce word variation
+		-- try it and see if it reduces error
+	stop distinguishing between upper and lower case
+. implement first iteration very quickly and use numerical evaluation
+to determine where to focus further efforts
+
+Skewed classes
+. eg, you have way more examples of one class than another, eg, cancer is
+	very rare, so most examples won't show it
+. Precision and Recall can work around this problem:
+Accuracy
+	true positives + true negatives / total examples
+Precision
+. of all patients where we predicted y=1, what
+	fraction actually has cancer?
+	-- # True positives / (# Predicted) ==
+	-- # True positives / (# True positives + # False positives)
+Recall
+. of all patients that actually have cancer, what percentage
+	did we accurately predict as having cancer?
+	-- True positives / Actual positives ==
+	-- True positives / (True positives + False negatives)
+
+F score
+2 * (P*R)/(P+R)
+. pick the algorithm that gives you the highest F score
 
