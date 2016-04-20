@@ -1,0 +1,41 @@
+Support Vector Machine
+
+. cost function similar to logistic regression but simplified
+	-- not logarithmic anymore
+	cost_1
+	cost_0
+
+... and, get rid of 1/m terms, and use C on outside instead of lambda:
+. C * [sum(y^i*cost_1(Theta*x^i) + (1-y)*cost_0(Theta*x^i))] + 1/2*sum(Theta_j^2)
+	-- it will give same Theta as equation using lambda/2m if:
+			 C = 1/lambda
+. practically speaking, C "controls penalty	for misclassified training examples"
+	-- high values for C tell SVM to "try to classify all the examples correctly"
+
+Hypothesis doesn't yield a probability, it predicts a 0 or 1 directly
+
+
+Support Vector Machines, aka "Large Margin Classifiers"
+. based on simplified cost function graph: 
+	if y=1, we want Theta*X >=1, not just >= 0
+	if y=0, we want Theta*X <= -1, not just <= 0
+
+Vector Inner Product
+. given 2 2-dimensional vectors u and v:
+	p = length of projection of v onto u
+	u'v = p * || u ||
+		= u1v1 + u2v2
+|| u || = length of vector u -- if 2-dimensional, use pythagorean theorem to get it
+	== square root(u1^2 + u2^2)
+
+Kernels
+. put three "landmark" points on a graph of x1 and x2
+. f1 = "similarity" between x and l^1 = exp(- (|| x - l^1 || ^2) / sigma^2)
+	exp(x) = e^x 
+. f2 = "similarity" between x and l^2
+	etc....
+. f functions are "kernel" functions
+. in particular, "gaussian" kernel functions
+	k(x,l^i)
+. if numerator is small, exp^0 = 1
+
