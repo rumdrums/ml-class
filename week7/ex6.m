@@ -25,7 +25,7 @@ clear ; close all; clc
 %  the data.
 %
 
-fprintf('Loading and Visualizing Data ...\n')
+fprintf('Loading and Visualizing 1st Set of Data ...\n')
 
 % Load from ex6data1: 
 % You will have X, y in your environment
@@ -77,7 +77,7 @@ pause;
 %  plot the data. 
 %
 
-fprintf('Loading and Visualizing Data ...\n')
+fprintf('Loading and Visualizing 2nd Set of Data ...\n')
 
 % Load from ex6data2: 
 % You will have X, y in your environment
