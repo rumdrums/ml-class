@@ -9,7 +9,7 @@ Support Vector Machine
 . C * [sum(y^i*cost_1(Theta*x^i) + (1-y)*cost_0(Theta*x^i))] + 1/2*sum(Theta_j^2)
 	-- it will give same Theta as equation using lambda/2m if:
 			 C = 1/lambda
-. practically speaking, C "controls penalty	for misclassified training examples"
+. practically speaking, C "controls penalty for misclassified training examples"
 	-- high values for C tell SVM to "try to classify all the examples correctly"
 
 Hypothesis doesn't yield a probability, it predicts a 0 or 1 directly

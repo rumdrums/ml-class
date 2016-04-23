@@ -6,3 +6,15 @@ x1 = [1 2 1]; x2 = [0 4 -1]; sigma = 2;
 sim = gaussianKernel(x1, x2, sigma);
 
 
+% steps:
+% 1) train model with initial values of C and sigma
+% 2) get error
+% 3) use new values of C and sigma
+% 4) keep doing it until you find the lowest error
+
+load('ex6data3.mat');
+[C, sigma] = dataset3Params(X, y, Xval, yval);
+model= svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
+visualizeBoundary(X, y, model);
+
+
