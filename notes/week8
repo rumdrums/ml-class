@@ -1,0 +1,25 @@
+Unsupervised Learning
+
+K-means clustering algorithm
+. randomly initialize "centroids"
+. iterative:
+	1) cluster assignment step -- assign each data point
+		to centroid it's closest to
+		-- for each i in 1 to m:
+				c^i := index of cluster centroid closest to x^i
+	2) "inner loop": move centroid step
+		-- move them to average of points in that cluster
+		-- for each k in 1 to K:
+				u_k := average of points assigned to cluster k
+	... REPEAT
+. inputs:
+	-- K: number of clusters
+	-- Training set
+. K-means for non-well-separated clusters
+
+Optimization objective
+
+. Cost function:
+	J(c^1,...,c^m,u_1,...,U_k) = 1/m*sum(||x^i-u_c||^2)
+
+
