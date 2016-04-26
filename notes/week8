@@ -20,6 +20,18 @@ K-means clustering algorithm
 Optimization objective
 
 . Cost function:
-	J(c^1,...,c^m,u_1,...,U_k) = 1/m*sum(||x^i-u_c||^2)
+	J(c^1,...,c^m,u_1,...,U_k) = 1/m*sum(||x^i-u_c^i||^2)
+		-- find c^i and u_c^i to minimize cost or "distortion"
+
+Random initialization
+. K < m --- duh
+. randomly pick K training examples
+. *** random initialization can lead to different results based on your choices
+	-- susceptible to local optima of the cost function
+	-- so, loop it a certain number times with different random initializations
+		and pick the one that gives lowest cost
+. looping the random initializations is more important when k is small
+	-- eg, 2 to 10
+. large k is less susceptible to problems of random initializations
 
 
