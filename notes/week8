@@ -34,4 +34,16 @@ Random initialization
 	-- eg, 2 to 10
 . large k is less susceptible to problems of random initializations
 
+Choosing number of clusters
+. What is right value of K?
+	-- Unfortunately, still mostly a manual activity
+. Elbow method
+	-- look at values of cost function as you increase number of clusters
+	-- hopefully the line of cost function plotted against number of clusters
+		drops quickly then levels off -- sort of L-shaped
+	-- con: the graph is often ambiguous and doesn't look like an L or elbow at all
+. "Downstream" considerations
+	-- less concern about the data itself and more concerned about what best
+		serves your purposes -- ie, if you're a t-shirt manufacturer trying to
+		determine how many/what sizes to make
 
