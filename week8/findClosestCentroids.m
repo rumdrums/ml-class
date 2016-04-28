@@ -21,10 +21,14 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
-
-
-
-
+% initialize matrix to hold all the distances:
+distanceMat = zeros(size(X,1),K);
+for i = 1:size(X,1)
+	for j = 1:K
+		distanceMat(i,j) = norm( X(i,:) - centroids(j,:));
+	end
+end
+[unused, idx ] = min(distanceMat,[],2);
 
 
 % =============================================================

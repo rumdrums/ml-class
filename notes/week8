@@ -47,3 +47,9 @@ Choosing number of clusters
 		serves your purposes -- ie, if you're a t-shirt manufacturer trying to
 		determine how many/what sizes to make
 
+Dimensionality Reduction
+. turning mutliple highly correlated features into fewer or a single feature
+. dimensionality can help you visualize data -- eg reducing all your features down
+	to only 2 or 3 to allow you to view it on a plot
+
+
