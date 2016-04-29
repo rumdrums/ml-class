@@ -1,0 +1,11 @@
+load('ex7data2.mat');
+K = 3; % 3 Centroids
+initial_centroids = [3 3; 6 2; 8 5];
+idx = findClosestCentroids(X, initial_centroids);
+
+% findClosestCentroids
+centroids = initial_centroids;
+K = size(centroids, 1);
+idx = zeros(size(X,1), 1);
+distanceMat = zeros(size(X,1),K);
+

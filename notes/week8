@@ -52,4 +52,21 @@ Dimensionality Reduction
 . dimensionality can help you visualize data -- eg reducing all your features down
 	to only 2 or 3 to allow you to view it on a plot
 
+Principal Component Analysis
+. if reducing from 2 dimensions to 1:
+	goal is to "find direction onto which to 
+	project data so as to minimize the projection error"
+. in general:
+	reduce from n dimensions to ki dimensions -- 
+	find k vectors "onto which to project data so 
+	as to minimize the projection error"
+. PCA is NOT linear regression -- though it looks similar
+	-- most immediate difference is that the lines calculated between fit line
+		and points are perpendicular -- ie, the shortest distance to the line
+
+Prior to dimensionality reduction
+. Feature scaling
+. Mean normalization -- zero mean
+	(x_j - u_j) / s_j -- s_j usually standard deviation
+
 
