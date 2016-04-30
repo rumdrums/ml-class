@@ -9,3 +9,17 @@ K = size(centroids, 1);
 idx = zeros(size(X,1), 1);
 distanceMat = zeros(size(X,1),K);
 
+%computeCentroids
+[m n] = size(X);
+
+1) add index to first column of X
+combined = [idx X];
+
+2) iterate 1:K
+filtered = combined( (combined(:,1) == 1), : );
+filtered = combined( (combined(:,1) == 1), 2:end );
+
+for i = 1:K
+	centroids(i,:) = mean(combined( (combined(:,1) == i), 2:end ));
+end
+
