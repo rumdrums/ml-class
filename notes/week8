@@ -69,4 +69,27 @@ Prior to dimensionality reduction
 . Mean normalization -- zero mean
 	(x_j - u_j) / s_j -- s_j usually standard deviation
 
+PCA Algorithm
+. Compute covariance matrix -- also represented as sigma, which is lame:
+	Sigma = 1/m * Sum( x^i * x^i' ) (each row of x times itself transposed)
+		-- VECTORIZED: 1/m ( X' * X )
+		-- and x^i is Mean Normalized, as indicated above
+	-- returns nXn matrix (results from nXm * m*n multiplication ]
+
+. Compute "eigenvectors" of matrix Sigma:
+	-- "svd" and "eig" are two Octave functions that do this
+		-- e.g., [U, S, V] = svd(Sigma)
+	-- "SVD" = Singular Value Decomposition
+	-- U matrix is also nXn -- columns are u vectors to u^m
+	-- reduce to K dimensions by taking first K column vectors of U
+	-- U_reduce is U with only the k dimensions you want -- so, nXk matrix
+	-- Z = U_reduce' * X
+		--  nXk' * nXm = 
+			kXn * nXm = 
+			kXm vector 
+
+Reconstruction after data after compression
+. X_approx = U_reduce * Z
+	-- nXk * kXm =
+	   nXm matrix
 

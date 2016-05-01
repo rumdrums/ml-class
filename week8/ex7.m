@@ -43,8 +43,6 @@ fprintf('Closest centroids for the first 3 examples: \n')
 fprintf(' %d', idx(1:3));
 fprintf('\n(the closest centroids should be 1, 3, 2 respectively)\n');
 
-fprintf('Program paused. Press enter to continue.\n');
-pause;
 
 %% ===================== Part 2: Compute Means =========================
 %  After implementing the closest centroids function, you should now
@@ -62,8 +60,6 @@ fprintf('   [ 2.428301 3.157924 ]\n');
 fprintf('   [ 5.813503 2.633656 ]\n');
 fprintf('   [ 7.119387 3.616684 ]\n\n');
 
-fprintf('Program paused. Press enter to continue.\n');
-pause;
 
 
 %% =================== Part 3: K-Means Clustering ======================
@@ -79,7 +75,7 @@ load('ex7data2.mat');
 
 % Settings for running K-Means
 K = 3;
-max_iters = 10;
+max_iters = 20;
 
 % For consistency, here we set centroids to specific values
 % but in practice you want to generate them automatically, such as by
@@ -89,8 +85,16 @@ initial_centroids = [3 3; 6 2; 8 5];
 
 % Run K-Means algorithm. The 'true' at the end tells our function to plot
 % the progress of K-Means
-[centroids, idx] = runkMeans(X, initial_centroids, max_iters, true);
+
+% adding this myself to see more realistic example:
+initial_centroids = kMeansInitCentroids(X, K);
+
+%[centroids, idx] = runkMeans(X, initial_centroids, max_iters, true);
 fprintf('\nK-Means Done.\n\n');
+
+% my code to hvae some fun:
+random_centroids = kMeansRandomCentroids(X,K);
+[centroids, idx] = runkMeans(X, random_centroids, max_iters, true);
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
@@ -123,7 +127,11 @@ X = reshape(A, img_size(1) * img_size(2), 3);
 
 % Run your K-Means algorithm on this data
 % You should try different values of K and max_iters here
-K = 16; 
+
+%K = 16; 
+
+K = 32; 
+
 max_iters = 10;
 
 % When using K-Means, it is important the initialize the centroids
@@ -133,6 +141,7 @@ initial_centroids = kMeansInitCentroids(X, K);
 
 % Run K-Means
 [centroids, idx] = runkMeans(X, initial_centroids, max_iters);
+%[centroids, idx] = runkMeans(X, initial_centroids, max_iters, true);
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
