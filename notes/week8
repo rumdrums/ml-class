@@ -18,8 +18,7 @@ K-means clustering algorithm
 . K-means for non-well-separated clusters
 
 Optimization objective
-
-. Cost function:
+. Cost/Distortion function:
 	J(c^1,...,c^m,u_1,...,U_k) = 1/m*sum(||x^i-u_c^i||^2)
 		-- find c^i and u_c^i to minimize cost or "distortion"
 
@@ -28,7 +27,8 @@ Random initialization
 . randomly pick K training examples
 . *** random initialization can lead to different results based on your choices
 	-- susceptible to local optima of the cost function
-	-- so, loop it a certain number times with different random initializations
+. How to determine which intiailization to use:
+	-- loop it a certain number times with different random initializations
 		and pick the one that gives lowest cost
 . looping the random initializations is more important when k is small
 	-- eg, 2 to 10
@@ -92,4 +92,40 @@ Reconstruction after data after compression
 . X_approx = U_reduce * Z
 	-- nXk * kXm =
 	   nXm matrix
+
+Choosing k (number of principal components)
+. Average squared projection error / Total variation in the data should be < 0.01, so
+	that 99% of variance is retained
+	-- 95%, 90% may also be acceptable
+. Average squared projection error:
+	-- 1/m * sum ( || x^i - x_approx^i ||^2 )
+. Total variation:
+	-- 1/m * sum ( || x^i ||^2 )
+
+. Algorithm:
+	-- start with k=1, compute:
+		U_reduce
+		Z
+		X_approx
+	-- *** But this is inefficient ***
+	-- S, as returned by 'svd' function, is a diagonal matrix
+		-- you can take compute 1 - ( sum(S_ii) from 1-k ) / ( sum (S_ii) from 1-n )
+			where 1-k is the first k rows of S
+			denominator is all rows of S
+		-- ii is the only non-zero value in that row of the S matrix
+		-- if less than .01, or whatever your desired threshold, you're good
+
+Advice for Applying PCA
+. goal is to speed up your learning algorithm
+. PCA defines a mapping from X (your original, uncompressed feature set) to Z, your
+	reduced feature set
+	-- this mapping should be devised *** only using your training set ***
+	-- but should be applied to your cross validation and test sets as well
+. when visualization is the goal:
+	reduce k to 2 or 3, since you can't visualize more than that
+. Don't use PCA to prevent overfitting
+	-- Use regularization instead
+	-- PCA is just taking into account X values, not considering y
+. First try implementing your ML system _WITHOUT_ PCA
+	-- only use it if you need it
 

@@ -1,0 +1,62 @@
+Anomaly Detection
+. similar to both supervised and unsupervised
+
+. given m examples, is x_test anomalous?
+. eg, is user on a website unusual 
+. is a particular system unusual?
+	given load average
+	memory use
+	disk writes
+	cpu load/network traffic
+	-- if p(x) < e is small, may be anomaly
+
+. Gaussian distribution
+	x ~ N(u,sigma^2) ~ means "distributed as",
+		x distributed normally with mean u and sd = sigma (variance = sigma^2)
+
+	-- u is just 1/m*sum(x^i)
+	-- sigma^2 = 1/m * sum(x^i-u)^2
+	***	-- machine learners usually use 1/m, instead of 1/m-1
+. bell curve formual
+	= (1/sqrt(2pi)*sigma)^(-(x-u)^2/(2*sigma^2))
+
+. Pi = Product notation, similar to sigma for summation but each element is multiplied
+	by one another
+. Given vector x with n dimensions:
+	p(x) = p(x1;u1,sigma^2_1)*p(x2;u2,sigma^2_2) ... * p(x_n;u_n,sigma^2_n)
+		 = Pi(x_j; u_j, sigma^2_j)
+	-- assumes that each x_j is normally distributed and has its own values
+		for u and sigma^2
+	-- also assumes (loosely) that each x_j is independent
+
+Anamoly detection algorithm
+1) Choose features you think might be indicative of anomalous examples
+2) Given {x^1,...,x^m}, fit parameters:
+	u_j = 1/m * Sum(x^i_j) 
+	sigma^2_j = 1/m * Sum(x^i_j - u_j)^2
+3) Given new example x, compute p(x):
+	p(x) = Pi(p(x_j; u_j, sigma^2_j)
+         = Pi((1/sqrt(2pi)*sigma)^(-(x_j-u_j)^2/(2*sigma^2)))
+	if p(x) is small, flag as anomaly
+
+Real-number evaluation
+. making decisions about what variables to include easier
+	if we have way of evaluating algorithm
+. Assume we have labeled data, where y = 0/1 if not / anomalous
+	-- 10,000 normal examples, training set should be NOT anomalous examples
+	-- 20-50 anamlous examples
+. taking 10000 normal examples:
+	-- training set: 6000
+. put your anamlous ones into CV and test with rest of the normals:
+	-- cross-validation: 2000 normal, 10 anomalous
+	-- test: 2000 good, 10 anomalous
+. steps for evaluation:
+	1) fit model to training set
+	2) on test / CSV sets, predict whether y = 1 or 0
+. evaluation metrics:
+	classification accuracy is not good -- because y is usually 0
+		true positive / false positive / false negative / true negative
+		precision / recall
+		f1-score
+		can also use CV set to choose parameter e
+	
