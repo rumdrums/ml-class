@@ -60,3 +60,76 @@ Real-number evaluation
 		f1-score
 		can also use CV set to choose parameter e
 	
+Anomaly Detection vs Supervised Learning
+. Anomaly detection for:
+	-- very small number of positive examples
+	-- large number of negative examples
+	-- many different "types" of anomalies, such that you
+		*** don't expect to be able to predict from your few positive
+		examples what future anomalies will look like ***, but rather
+		just that something has gone wrong
+	-- fraud detection, things that go wrong in quality control,
+		eg aircraft engine anomaly, monitoring machines in
+		data center
+. Supervised learning
+	-- large number of both positive and negative examples
+	-- enough positive examples to be able to predict specific
+		types of future positive outcomes
+	-- eg, although difficult to detect what future spam may look like,
+		we have enough examples of it to use supervised learning
+	-- spam, weather, cancer classification
+
+Choosing what Features to Use
+. non-Gaussian features -- try to transform to make it Gaussian, although often
+	non-Gaussian features will still look fine
+		-- try to take log of feature
+		-- or log(x+c) where c is a constant
+		-- or square it, or take square root
+		-- use histogram to analyze the results
+. error analysis
+	. p(x) should be large for normal examples, small for anomalous examples
+	. Look at your anomalous examples and see if investigating them gives
+		you ideas for what features to add
+	. Choose features that might take on unusually large or small values
+		in the event of an anomaly
+	. Interactions between features -- eg, if software glitch, you may create a 
+		feature that is cpu load^2 / network traffic
+
+Multivariate Gaussian Distribution
+. doesn't model p(x1),p(x2), ..., etc., separately
+. rather, models p(x) all at once
+. p(x;u,Sigma) [ Sigma is a covariance matrix ]
+	= (1/(2pi^(n/2)*|sigma|^(1/2))) ^ (-1/2(x-u)'*Sigma^-1(x-u))
+		|Sigma| means 'determinant' of Sigma -- det(Sigma) in Octave
+. "smaller" sigma leads to narrower density plots, "larger" sigma leads to wider plots
+
+Anomaly Detection using Multivariate Guassian Distribution
+. u is n-dimensional vector
+	-- u is 1/m*sum(x^i) -- (average)
+. Sigma is nXn matrix
+	-- Sigma is 1/m*sum(x^i -u)(x^i-u)' -- same as PCA
+. Fit the model by setting u and Sigma
+. Given a new example x, compute p(x)
+	(1/(2pi^(n/2)*|sigma|^(1/2))) ^ (-1/2(x-u)'*Sigma^-1(x-u))
+. Flag anomaly if p(x) < e
+. Relationship to Original model:
+	-- multivariate and original are identical, with constraint that your off-diagonal
+		values of Sigma must be zero, eg:
+			[ 1 0 0 ; 0 1 0; 0 0 1 ]
+	-- which effectively means you can't model the correlations between different
+		x parameters
+	-- contours must be "axis-aligned", ie you can't have the slanted contours that
+		multivariate model allows
+Original Model vs Multivariate Model
+. Original:
+	-- original used more often
+	-- have to manually create special features
+	-- computationally cheaper
+	-- ok even if m is small
+. Multivariate:
+	-- multivariate has advantage of capturing correlations
+	-- don't have to create the special interactive features
+	-- computationally more expensive, eg taking inverse of Sigma is expensive
+	-- must have m > n, else Sigma is non-invertible
+		-- ideally m >= 10*n
+		-- can also be non-invertible if x1=x2, x3 = x4+x5, etc. (linearly dependent)
