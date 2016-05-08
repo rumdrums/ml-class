@@ -1,0 +1,24 @@
+load('ex8data1.mat');
+[mu sigma2] = estimateGaussian(X);
+p = multivariateGaussian(X, mu, sigma2);
+pval = multivariateGaussian(Xval, mu, sigma2);
+[epsilon F1] = selectThreshold(yval, pval);
+
+
+
+
+
+% mean, the for loop way:
+total = 0
+for i = 1:size(X,1)
+	total = total + X(i,:);
+end
+
+% variance, the for loop way:
+variance = 0
+for i = 1:size(X,1)
+    variance = variance + (X(i,:) - mean(X)).^2;
+end
+%variance = variance / (size(X,1)-1);
+variance = variance / size(X,1);
+
