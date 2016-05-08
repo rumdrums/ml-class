@@ -146,11 +146,56 @@ Collaborative Filtering
 	1) given x, categories that movies belong to and the 
 		'score' for those categories, and y (movie ratings):
 		-- solve for theta
+		-- min(Theta^1...,Theta^(n_u)) = 1/2 Sigma_j..n_u( Sigma_i:r(i,j)=1(Theta^j'*x^i - y^(i,j)^2)) + 
+				lambda/2(Sigma_j..n(Sigma_k..n((Theta_k^j)2)))
+			-- in english: for each user j, sum each movie i rated by that user
 	2) you're trying to solve for x instead of theta...
+		-- min(x^1,...,x^(n_m)) = 1/2 Sigma_i..n_m( Sigma_j:r(i,j)=1(Theta^j'*x^i - y^(i,j)^2)) + 
+				lambda/2(Sigma_i..n(Sigma_k..n((x_k^i)2)))
+			-- in english: for each movie i, sum all users j that have rated that movie
 		-- theta is a vector of scores __users have given__ for 
 			particular categories, eg action, romance
 		-- y is the ratings given to movies
 		-- solve for x, the levels of action or romance in particular movies
 			that will make theta * x = y
-. simultaneously use both of the above to keep getting more accurate
+. simultaneously use both of the above to keep getting more accurate:
+	-- j is user, r(i,j) = 1 means movie i has been rated by user j
+	-- J(x^1,...,x^(n_m),Theta^1,...Theta(n_m)) 
+			= 1/2 Sigma_(i,j):r(i,j)=1( Theta^j'*x^i-y^(i,j)^2)
+				+ lambda/2 * Sigma_i..n_m( Sigma_k..n(x_k^i)^2) 
+				+ lambda/2 * Sigma_j..n_u( Sigma_k..n(Theta_k^j)^2)
+	-- there is no X_0 or Theta_0
+
+Algorithm
+1) Initialize x^1,...,x^(n_m), Theta_1,...,Theta^(n_u) to small random values
+2) Minimize J using gradient descent
+	x := x - a ( Sigma ( Theta'*x - y )*Theta + lambda*x )
+	Theta := Theta - a ( Sigma ( Theta'*x - y)x + lambda*Theta)
+3 ) For a user with parameters Theta and a movie with features x, predict
+	a star rating of Theta'*x
+		
+Vectorization of Collaborative Filtering
+. low rank matrix factorization
+	-- matrix Y 
+			= X (features organized in rows) 
+				* Theta'(users' parameters organized in rows, transposed)
+
+When the algorithm learns features, there's not necessarily a human-understandable
+	meaning to the features
+Finding similar movies
+. movie i and movie j are closely related if || x^i - x^j || is small
+
+
+Mean normalization
+. for users who have not rated any movies
+. for matrix Y:
+1) compute average rating (by other users) for each movie
+2) subtract mean from each rating
+3) Use this mean-normalized dataset to learn Theta^j and x^i
+4) For user j, on movie i, predict:
+	Theta^j' * x^i + u_i 
+5) For new user:
+		Theta = matrix of 0s, so you wind up with average ratings as
+			prediction for that user
+		( 0 * x^i + u_i = u_i )
 
