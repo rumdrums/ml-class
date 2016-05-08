@@ -133,3 +133,24 @@ Original Model vs Multivariate Model
 	-- must have m > n, else Sigma is non-invertible
 		-- ideally m >= 10*n
 		-- can also be non-invertible if x1=x2, x3 = x4+x5, etc. (linearly dependent)
+
+Recommender Systems
+. eg, Amazon recommendations for books and stuff
+. offer one example of problems where you get the algorithm itself to
+	figure out what features to use
+
+Collaborative Filtering
+. "collaborative" movie recommendation systems:
+	-- basically, linear regression problems
+. 2 scenarios: 
+	1) given x, categories that movies belong to and the 
+		'score' for those categories, and y (movie ratings):
+		-- solve for theta
+	2) you're trying to solve for x instead of theta...
+		-- theta is a vector of scores __users have given__ for 
+			particular categories, eg action, romance
+		-- y is the ratings given to movies
+		-- solve for x, the levels of action or romance in particular movies
+			that will make theta * x = y
+. simultaneously use both of the above to keep getting more accurate
+
