@@ -1,0 +1,63 @@
+Learning with Large Datasets
+. "it's not who has the best alrgorithm, it's who
+	has the most data"
+. problem: calculations involving 100,000,000 
+	data points is computationally expensive
+. one technique: plot cost of training and CV sets
+	as m increases up to, say, 1000
+	-- if error significantly higher with cross-validation set,
+		then you should increase me
+	-- but if errors are similar, you are probably fine with
+		the smaller sample size
+
+Stochastic Gradient Descent
+. Problem with GD with large datasets:
+	-- "Batch" gradient descent -- what we've done previously:
+	Theta_j := Theta_j - a*1/m * Sum(h(x^i) - y^i)x_j^i
+							-- this part takes a long time to run
+. Stochastic GD:
+	1) Randomly shuffle dataset
+	2) for i = 1, ..., m
+		Theta_j := Theta_j - a*(h(x^i)-y^i)*x_j^i
+		-- i.e., you're doing it for each individual item in dataset
+			rather than totalling them all up each time
+		-- parameters will generally, but not always, get __CLOSE__
+			to the global minimum
+		-- should OSCILLATE around the global minimum
+		-- they do not, however, converge
+	3) Repeat step 2 1 to 10 times
+
+Mini-batch Gradient Descent
+. Whereas:
+	-- batch GD: Use all m examples in each iteration
+	-- stochastic GD: Use 1 example in each iteration
+. Use b examples in each iteration
+	b = mini-batch size
+		-- e.g., 2 - 100
+. Say b = 10, m = 1000
+	for i = 1, 11, 21, 31 ..., 991 {
+		Theta_j := Theta_j - a*1/10 * Sum (h(x^k)-y^k)x_j^k
+			( for every j = 0, ..., n )
+	}
+. Why is this advantageous?
+	__Vectorization__ allows parallelization
+
+Stochastic Gradient Descent Convergence
+. to check for convergence:
+	-- whereas with batch GD, you plot J_train(Theta) as function of
+		the number of iterations of GD
+	-- with stochastic GD:
+		-- During learning, save cost of each calculation of cost function
+		-- every 1000 iterations of so, plot average cost over those last 1000
+			examples to see how you're doing
+	-- if you plot it, you should see a zigzagging line that nonetheless flattens
+		out as number of iterations increases
+		-- you may see slightly better results with smaller learning rate (a)
+		-- lines should be smoother if you average every 5000 instead of every 1000
+. if you want stochastic GD to potentially converge instead of oscillate, you can decrease
+	learning rate over time
+		-- a = const1 / ( iterationNumber + const2)
+		-- may have to play with const1 and const2 to get it working right
+			-- this is rarely done because of this
+
+	
