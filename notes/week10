@@ -60,4 +60,25 @@ Stochastic Gradient Descent Convergence
 		-- may have to play with const1 and const2 to get it working right
 			-- this is rarely done because of this
 
+Online Learning
+. e.g., shipping service -- will customer use our shipping service?
+	yes, y=1, no, y=0
+	-- learn p(y=1|x;Theta) to optimize price
+. Run forever, get (x,y) corresponding to user
+. Update Theta using (x,y)
+	-- Theta_j := Theta_j - a(h(x)-y)x_j
+. Look at one example of time -- there's no fixed training set, it's
+	just a continuous stream of users
+	-- if it's NOT a continuous stream of users, however, best to save it and run
+		model all at once
+. Learn to adapt to changing user preferences
+
+Other example:
+. product search (eg, phone) -- determine 10 results to return
+. compile x vector of features of phone, how many words in user query
+	match name or description of phone, etc.
+	-- y = 1 if user clicks on link
+	-- learn p(y=1|x;Theta)
+		-- predicted click-through rate (CTR)
+
 	
