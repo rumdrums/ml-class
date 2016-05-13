@@ -81,4 +81,12 @@ Other example:
 	-- learn p(y=1|x;Theta)
 		-- predicted click-through rate (CTR)
 
-	
+Map-Reduce and Data Parallelism
+. compared to stochastic gradient descent
+. split your training set into multiple pieces, handled by different machines
+. first machine does summation for its share of m, say m=400
+	temp_j^1 = Sum_1..100(h(x^i)-y^i)x_j^i
+		... and so on for rest of machines	
+. send results to server to combine results
+	-- Theta_j := Theta_j - a*1/400(temp_j^1+temp_j^2+temp_j^3+temp_j^4)
+
