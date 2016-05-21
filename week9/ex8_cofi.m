@@ -35,12 +35,12 @@ fprintf('Average rating for movie 1 (Toy Story): %f / 5\n\n', ...
         mean(Y(1, R(1, :))));
 
 %  We can "visualize" the ratings matrix by plotting it with imagesc
-imagesc(Y);
-ylabel('Movies');
-xlabel('Users');
+%imagesc(Y);
+%ylabel('Movies');
+%xlabel('Users');
 
 fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+%pause;
 
 %% ============ Part 2: Collaborative Filtering Cost Function ===========
 %  You will now implement the cost function for collaborative filtering.
@@ -59,6 +59,16 @@ Y = Y(1:num_movies, 1:num_users);
 R = R(1:num_movies, 1:num_users);
 
 %  Evaluate cost function
+
+fprintf('\nX\n\n');
+X
+fprintf('\nTheta\n\n');
+Theta
+fprintf('\nY\n\n');
+Y
+fprintf('\nR\n\n');
+R
+
 J = cofiCostFunc([X(:) ; Theta(:)], Y, R, num_users, num_movies, ...
                num_features, 0);
            

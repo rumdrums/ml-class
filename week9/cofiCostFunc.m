@@ -44,19 +44,19 @@ Theta_grad = zeros(size(Theta));
 Y_hat = (X*Theta');
 
 % remove 0-entries by multiplying by R:
-Y_hat = (Y_hat - Y).*R;
+err = (Y_hat - Y).*R;
 
 
-J = 1/2 * sum(sum((Y_hat).^2));
+J = 1/2 * sum(sum((err).^2));
 
 X_reg = lambda/2 * sum(sum(X.^2));
 Theta_reg = lambda/2 * sum(sum(Theta.^2));
 
 J = J + X_reg + Theta_reg;
 
-X_grad = Y_hat * Theta;
+X_grad = err * Theta;
 X_grad_reg = lambda * X;
-Theta_grad = Y_hat' * X;
+Theta_grad = err' * X;
 Theta_grad_reg =  lambda * Theta;
 
 X_grad = X_grad + X_grad_reg;
