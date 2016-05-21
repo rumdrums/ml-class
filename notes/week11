@@ -1,0 +1,84 @@
+Photo OCR
+. The pipeline:
+1. text detection
+	-- find the characters
+2. character segmentation
+	-- segment out individual characters
+3. character classification
+	-- identify individual characters
+
+Sliding Windows
+. dealing with aspect ratio
+	-- ratio of width to height
+. pedestrian in picture example:
+	-- training: get a training set of 82x36 images, y=1 for a pic
+		of a pedestrian, y=0 others
+	-- test set:
+		-- start with 82x36 pixel patch of an image, for instance
+		-- start at top left, test for presence of pedestrian, slide
+			rectangle over a fixed interval each time
+			" stride interval " or "step size"
+			-- 1 pixel step size works best, but is computationally expensive
+		-- then do larger image patches, by resizing your image
+
+Back to text recognition:
+	-- slide over your image
+	-- intial passes produce a black/white images that reflect probability
+		of text appearing in different areas of image; white high probably, black low
+	-- next step is to draw pictures around areas of probable text
+	-- "expansion algorithm"
+		-- for every pixel, is it within 5-10 pixels of a white pixel; if
+			yes, color those white as well
+	-- use a simple heuristic to remove rectangles with wrong aspect ratio, eg
+		a rectangular vertical -- though this may exclude things like vertical text
+	-- run 1-d sliding window (ie, just one row ) across rectangle -- find white spaces
+		between letters and segment there -- y=1 for rectangle with a split, 0 otherwise
+ 
+Getting lots of data and Artificial Data
+. taking data from scratch:
+	-- eg, you can use characters from fonts to train for OCR, setting them against
+	random backgrounds, scaling, rotation, blurring, etc
+. modifying existing data:
+	-- eg, by distorting it -- example of a voice recording with different background
+		noises added to it
+	-- doesn't help to add purely random / meaningless distortions, distortions should
+		be representative of actual scenarios likely to be encountered
+. tips:
+	-- make sure you have a low bias classifier before expending the effort to
+		accumulate tons of data
+	-- "how much work would it be to get 10x as much data as we currently have?"
+		-- artificial data synthesis
+		-- collect/label it yourself
+		-- "crowd source"
+			-- can you hire people to classify data?
+
+Ceiling Analysis
+. breaking ML project down into its multiple parts
+	-- eg, OCR steps:
+		1) text detection
+		2) character segmentation
+		3) character recognition
+	-- measure overall system accuracy starting with an image fed to step 1
+		-- eg, 72%
+	-- measure accuracy by pre-populating step 1
+		-- "ground-truth labels" , ie give it the answers, 
+			so that step is 100% accurate
+	-- then measure overall accuracy again
+		-- eg, 89%
+	-- then do same for 2nd step in your pipeline and measure overall accuracy
+		-- eg 90%
+. what this tells you is that you gain a lot more by spending time improving the
+		first step than the 2nd step
+
+Supervised Learning
+	-- linear regression, logistic regression, neural networks, SVMs
+	-- you have (x^i, y^i)
+Unsupervised Learning
+	-- K-means, PCA, Anomaly Detection
+	-- you have only x^i
+Special applications
+	-- Recommender systems, large-scale machine learning
+Advice on building ML system
+	-- Bias/variance, regularization, deciding what to work on next,
+		evaluation of learning algorithms, learning curves, error analysis, ceiling analysis
+
